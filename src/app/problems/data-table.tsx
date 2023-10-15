@@ -31,6 +31,20 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   })
 
+  const getColorBasedOnDifficulty = (difficulty: "easy" | "medium" | "hard" | unknown) => {
+    switch (difficulty) {
+      case "easy":
+        return "green";
+      case "medium":
+        return "orange";
+      case "hard":
+        return "red";
+      default:
+        return "black";
+    }
+  };
+
+
   return (
     <div className="rounded-md border">
       <Table>
@@ -59,11 +73,15 @@ export function DataTable<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                {row.getVisibleCells().map((cell) =>{ 
+                  
+                  const cellColor = cell.getValue() ? getColorBasedOnDifficulty(cell.getValue()) : "black";
+
+                  return(
+                  <TableCell key={cell.id} style={{ color: cellColor }}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
-                ))}
+                )})}
               </TableRow>
             ))
           ) : (

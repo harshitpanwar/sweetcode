@@ -4,9 +4,9 @@ import { ColumnDef } from "@tanstack/react-table"
 
 export type Payment = {
   id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
+  status: "unattended" | "pending" | "attended" | "completed" 
+  question: string
+  difficulty: "easy" | "medium" | "hard"
 }
 
 export const columns: ColumnDef<Payment>[] = [
@@ -15,11 +15,11 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Status",
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "question",
+    header: "Problem",
   },
   {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "difficulty",
+    header: "Difficulty",
   },
 ]
