@@ -16,6 +16,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import { useRouter } from "next/navigation";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -29,7 +31,9 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-  })
+  });
+
+  const router = useRouter();
 
   const getColorBasedOnDifficulty = (difficulty: "easy" | "medium" | "hard" | unknown) => {
     switch (difficulty) {
@@ -72,6 +76,7 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                onClick={() => {router.push(`/problem/${row.id}`)}}
               >
                 {row.getVisibleCells().map((cell) =>{ 
                   

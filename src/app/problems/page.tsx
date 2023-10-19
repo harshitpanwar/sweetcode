@@ -6,10 +6,42 @@ async function getData(): Promise<Payment[]> {
   return [
     {
       id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      email: "m@example.com",
+      status: "unattended",
+      question: "Two Sum",
+      difficulty: "easy",
     },
+    {
+      id: "728ed52f",
+      status: "pending",
+      question: "Add Two Numbers",
+      difficulty: "medium",
+    },
+    {
+      id: "728ed52f",
+      status: "attended",
+      question: "Longest Substring Without Repeating Characters",
+      difficulty: "hard",
+    },
+    {
+      id: "728ed52f",
+      status: "completed",
+      question: "Median of Two Sorted Arrays",
+      difficulty: "hard",
+    },
+    {
+      id: "728ed52f",
+      status: "completed",
+      question: "3 Sum",
+      difficulty: "medium",
+    },
+    {
+      id: "728ed52f",
+      status: "completed",
+      question: "4 Sum",
+      difficulty: "hard",
+    }
+
+
     // ...
   ]
 }
