@@ -10,13 +10,18 @@ import Split from 'react-split';
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
 import { set } from "zod";
+import { Input } from "./ui/input";
 
 type Props = {}
 const code = `
-
-hello world
-
-
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(nums, target) {
+    
+};
 `;
 
 const CodeEditor = (props: Props) => {
@@ -40,8 +45,10 @@ const CodeEditor = (props: Props) => {
                 onChange={(value) => {setValue(value)}}
             />
         </div>
-         <div className='w-full overflow-auto'>
-             <Button className='' onClick={(e)=>setCode(e)}>Run</Button>
+         <div className='flex flex-col w-full overflow-auto mt-5'>
+            
+            <Input className='w-full mr-3 ml-3 h-screen' placeholder='Write Test Cases'/>
+            <Button className='flex w-fit m-5' onClick={(e)=>setCode(e)}>Run</Button>
          </div>
     </Split>
   )
