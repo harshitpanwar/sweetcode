@@ -1,49 +1,29 @@
 import { Payment, columns } from "./columns"
 import { DataTable } from "./data-table"
 
+async function getProblems(): Promise<Payment[]> {
+
+    "use server";
+
+    const response = await fetch('http://localhost:3000/api/problem', {
+      method: 'GET'
+    })
+    const data: any = await response.json();
+    console.log(data);
+
+    return data;
+  
+
+}
+
 async function getData(): Promise<Payment[]> {
   // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      status: "unattended",
-      question: "Two Sum",
-      difficulty: "easy",
-    },
-    {
-      id: "728ed52f",
-      status: "pending",
-      question: "Add Two Numbers",
-      difficulty: "medium",
-    },
-    {
-      id: "728ed52f",
-      status: "attended",
-      question: "Longest Substring Without Repeating Characters",
-      difficulty: "hard",
-    },
-    {
-      id: "728ed52f",
-      status: "completed",
-      question: "Median of Two Sorted Arrays",
-      difficulty: "hard",
-    },
-    {
-      id: "728ed52f",
-      status: "completed",
-      question: "3 Sum",
-      difficulty: "medium",
-    },
-    {
-      id: "728ed52f",
-      status: "completed",
-      question: "4 Sum",
-      difficulty: "hard",
-    }
 
+  //server action api call
+  const result:any = await getProblems();
 
-    // ...
-  ]
+  return result.problems;
+
 }
 
 export default async function DemoPage() {

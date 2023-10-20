@@ -35,13 +35,13 @@ export function DataTable<TData, TValue>({
 
   const router = useRouter();
 
-  const getColorBasedOnDifficulty = (difficulty: "easy" | "medium" | "hard" | unknown) => {
+  const getColorBasedOnDifficulty = (difficulty: "Easy" | "Medium" | "Hard" | unknown) => {
     switch (difficulty) {
-      case "easy":
+      case "Easy":
         return "green";
-      case "medium":
+      case "Medium":
         return "orange";
-      case "hard":
+      case "Hard":
         return "red";
       default:
         return "black";
