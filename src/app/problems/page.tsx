@@ -9,7 +9,6 @@ async function getProblems(): Promise<Payment[]> {
       method: 'GET'
     })
     const data: any = await response.json();
-    console.log(data);
 
     return data;
   

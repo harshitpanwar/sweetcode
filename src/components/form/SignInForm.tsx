@@ -44,7 +44,6 @@ const SignInForm = () => {
       password: values.password,
     });
 
-    console.log("signIndata", signInData);
 
     if(signInData?.error){
       console.log("error");

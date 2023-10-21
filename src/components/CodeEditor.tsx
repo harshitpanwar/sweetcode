@@ -30,7 +30,6 @@ const CodeEditor = (props: Props) => {
 
   const setCode = (e:any) =>{
 
-    console.log(value)
 
   }
 
