@@ -46,7 +46,10 @@ export const authOptions: NextAuthOptions = {
                     id: `${user.id}`,
                     name: user.name,
                     email: user.email,
-                    username: user.username
+                    username: user.username,
+                    easy: user.easySolved,
+                    medium: user.mediumSolved,
+                    hard: user.hardSolved,
                 }
             }
           })
@@ -55,12 +58,16 @@ export const authOptions: NextAuthOptions = {
 
           async jwt({token, user}) {
 
+            // console.log("jwt", token);
+            // console.log("user", user);
             return {...token, ...user};
           },
 
           async session({session, token, user}) {
-            
-
+            session.user.username = String(token?.username);
+            session.user.easy = Number(token?.easy);
+            session.user.medium = Number(token?.medium);
+            session.user.hard = Number(token?.hard);
               return {
                 ...session,
                 ...token,
