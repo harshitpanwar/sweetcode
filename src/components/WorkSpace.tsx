@@ -1,33 +1,14 @@
 "use client"
 
-type Props = {
-  problemId: string
-}
 import Split from 'react-split';
 import CodeEditor from './CodeEditor';
-import ProblemSection from './ProblemSection';
+import ProblemSection, { ProblemData } from './ProblemSection';
 import { useEffect, useState } from 'react';
 
 
-type ProblemData = {
-  problemId: number
-  problemName: string
-  problemDifficulty: "easy" | "medium" | "hard"
-  problemTags: string[]
-  problemLikes: number
-  problemDislikes: number
-  problemDescription: string
-  problemExamples: {
-          input: string
-          output: string
-          explanation: string
-  }[],
-  problemTestCases: {
-      input: string
-      output: string
-  }[]
+type Props = {
+  problemId: string
 }
-
 
 const WorkSpace = (props: Props) => {
 
@@ -57,10 +38,8 @@ const WorkSpace = (props: Props) => {
   }
   const code: string = apiData?.config?.code?.visible;
 
-  console.log("codesdfsadfsad", code);
-
   return (
-    <Split className="split" sizes={[35,65]} minSize={40}>
+    <Split className="split" sizes={[40,60]} minSize={40}>
         <ProblemSection problemData= {problemData}/>
         <CodeEditor code = {code} problemId = {problemData?.problemId}/>
     </Split>

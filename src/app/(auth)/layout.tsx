@@ -5,7 +5,11 @@ interface AuthLayoutProps {
 }
 
 const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
-  return <div className='bg-slate-200 p-10 rounded-md'>{children}</div>;
+  return (
+    <div className='grid place-items-center h-screen'>
+      <div className='bg-slate-200 p-10 rounded-md w-fit h-fit '>{children}</div>
+    </div>
+  );
 };
 
 export default AuthLayout;

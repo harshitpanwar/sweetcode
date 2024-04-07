@@ -12,7 +12,7 @@ import { useState, useEffect, use } from "react";
 import { set } from "zod";
 import { Input } from "./ui/input";
 import { useSession } from 'next-auth/react';
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 type Props = {
   code: string,
@@ -56,20 +56,17 @@ const CodeEditor = (props: Props) => {
       language: 'javascript'
     },
     method = 'post',
-    options:any = {
+    options = {
       headers,
       body,
       method
     };
 
     try {
-
-
-      const res:any = await axios.post('http://localhost:3000/api/run', body, {headers});
-      console.log(res);
+      const res:AxiosResponse = await axios.post('http://localhost:3000/api/run', body, {headers});
   
       if(res?.data?.status){
-        console.log("success");
+        //console.log("success");
         setCodeStatus({
           status: 'Queued...',
           color: 'yellow'
@@ -78,8 +75,9 @@ const CodeEditor = (props: Props) => {
       else{
         setRunButtonDisabled(false);
       }
-  
-    } catch (error) {
+    } 
+    
+    catch (error) {
       console.log(error);
       setRunButtonDisabled(false);
     }
@@ -99,14 +97,11 @@ const CodeEditor = (props: Props) => {
             />
         </div>
          <div className='flex flex-col w-full overflow-auto mt-5'>
-            
             <Input className='w-full mr-3 ml-3 h-screen' placeholder='Write Test Cases'/>
 
             <div className="flex flex-row items-center"> 
-
-              <Button disabled = {runButtonDisabled} className='flex w-fit m-5' onClick={(e)=> {runCode(value)}}>Run</Button>
+              <Button disabled = {runButtonDisabled} className='flex w-fit m-5' onClick={()=> {runCode(value)}}>Run</Button>
               <p color={codeStatus?.color}>{codeStatus?.status}</p>
-
             </div>
          </div>
     </Split>

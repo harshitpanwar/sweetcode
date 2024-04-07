@@ -14,9 +14,7 @@ const executeSchema = z.object({
 });
 
 export async function POST(req: Request) {
-
     try{
-
         const session = await getServerSession(authOptions);
         const email = session?.user?.email;
 
@@ -47,7 +45,6 @@ export async function POST(req: Request) {
             throw new Error("Problem not found");
         }
 
-
         let newSubmission = await prisma.submissions.create({
             data: {
               problemId: problemId,
@@ -70,7 +67,6 @@ export async function POST(req: Request) {
         const addToQueue = await insertIntoQueue(JSON.stringify(insertObject));
         console.log("addToQueue", addToQueue);
         
-
         if(!addToQueue){
 
             //update the user's submissions
@@ -97,11 +93,9 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json(newSubmission, {status: 201})
-        
-
       }
-      catch(error: any){
 
+      catch(error: any){
         return NextResponse.json(
             {
                 session: null,
@@ -110,5 +104,4 @@ export async function POST(req: Request) {
             {status: 400},    
         );
     }
-
 }

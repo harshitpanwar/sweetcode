@@ -2,18 +2,18 @@ import { NextResponse } from "next/server";
 import {prisma} from "@/lib/db";
 import * as z from "zod";
 
-
-
 const problemSchema = z.object({
     title: z.string().min(1, 'Title is required').max(100),
     description: z.string().min(1, 'Description is required').max(100),
     difficulty: z.enum(["Easy", "Medium", "Hard"]),
     config: z.object({
         tags: z.array(z.string()),
+
         testCases: z.array(z.object({
             input: z.string() || z.number() || z.array(z.string()) || z.array(z.number()),
             output: z.string() || z.number() || z.array(z.string()) || z.array(z.number()),
         })),
+        
         examples: z.array(z.object({
             input: z.string(),
             output: z.string(),
@@ -23,9 +23,7 @@ const problemSchema = z.object({
 });
 
 export async function POST(req: Request) {
-
     try {
-        
         const body = await req.json();
         const { title, description, difficulty, config } = problemSchema.parse(body);
 
@@ -60,11 +58,8 @@ export async function POST(req: Request) {
             },
             {status: 201},    
         );
-
-
-
-    } catch (error: any) {
-
+    }
+    catch (error: any) {
         return NextResponse.json(
             {
                 problem: null,
@@ -72,15 +67,11 @@ export async function POST(req: Request) {
             },
             {status: 500},    
         );
-        
     }
-
 } 
 
 export async function GET(req: Request) {
-
     try {
-
         //check for particular problem id
         const {searchParams} = new URL(req.url);
         const param = searchParams.get("id");
@@ -102,9 +93,9 @@ export async function GET(req: Request) {
         return NextResponse.json({
             problems
         });
+    }
 
-    } catch (error: any) {
-
+    catch (error: any) {
         return NextResponse.json(
             {
                 problems: null,
@@ -112,7 +103,5 @@ export async function GET(req: Request) {
             },
             {status: 500},    
         );
-        
     }
-
 }

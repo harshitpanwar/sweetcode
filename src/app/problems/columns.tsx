@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 export type Payment = {
   id: string
-  status? : "unattended" | "pending" | "attended" | "completed" 
+  status? : "Unattended" | "Pending" | "Attended" | "Completed" 
   title: string
   difficulty: "Easy" | "Medium" | "Hard"
   tags: string[]
