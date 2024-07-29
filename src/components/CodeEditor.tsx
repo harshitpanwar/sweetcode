@@ -13,6 +13,7 @@ import { set } from "zod";
 import { Input } from "./ui/input";
 import { useSession } from 'next-auth/react';
 import axios, { AxiosResponse } from "axios";
+import Toast from "./ui/Toast";
 
 type Props = {
   code: string,
@@ -29,13 +30,62 @@ const CodeEditor = (props: Props) => {
     status: '',
     color: 'black'
   });
+  const [showToast, setShowToast] = useState(false);
 
   code = props.code;
   const {data: session} = useSession();
 
   useEffect(() => {
     setValue(code);
-  }, [props.code, session])
+  }, [props.code])
+
+  const checkCodeSubmisstion = async (tryNumber: number, id:unknown) => {
+
+    if(tryNumber > 10){
+      setCodeStatus({
+        status: 'It is taking some time. Please check after some time',
+        color: 'red'
+      });
+      setRunButtonDisabled(false);
+      return;
+    }
+    else{
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session?.token}`
+      };
+
+      const res:AxiosResponse = await axios.get(`/api/run?id=${id}`, {headers});
+
+      if(res?.data?.submission?.status === 'queued'){
+        console.log("it's still pending");
+        setCodeStatus({
+          status: 'Pending...',
+          color: 'yellow'
+        });
+        setTimeout(() => {
+          checkCodeSubmisstion(tryNumber+1, id);
+        }, 5000);
+      }
+      else if(res?.data?.submission?.status === 'SUCCESS'){
+        setCodeStatus({
+          status: 'Success',
+          color: 'green'
+        });
+        setShowToast(true);
+        setRunButtonDisabled(false);
+      }
+      else{
+        setCodeStatus({
+          status: 'Failed',
+          color: 'red'
+        });
+        setRunButtonDisabled(false);
+      }
+
+    }
+
+  }
 
   const runCode = async (code: string) => {
 
@@ -63,7 +113,7 @@ const CodeEditor = (props: Props) => {
     };
 
     try {
-      const res:AxiosResponse = await axios.post('http://localhost:3000/api/run', body, {headers});
+      const res:AxiosResponse = await axios.post('/api/run', body, {headers});
   
       if(res?.data?.status){
         //console.log("success");
@@ -71,6 +121,7 @@ const CodeEditor = (props: Props) => {
           status: 'Queued...',
           color: 'yellow'
         });
+        checkCodeSubmisstion(0, res?.data?.id);
       }
       else{
         setRunButtonDisabled(false);
@@ -87,6 +138,10 @@ const CodeEditor = (props: Props) => {
 
   return (
     <Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[60, 40]} minSize={60}>
+        {
+          showToast && <Toast message='Code Submitted' time={5000} type='success' onClose={()=>setShowToast(false)}/>
+
+        }
         <div className='w-full overflow-auto bg-vscodedarktheme'>
             <CodeMirror
                 value = {value}

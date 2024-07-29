@@ -49,7 +49,7 @@ export async function POST(req: Request) {
             data: {
               problemId: problemId,
               userId: user.id,
-              code: code,
+              code: "",
               language: language,
               status: "pending"
             }
@@ -84,10 +84,6 @@ export async function POST(req: Request) {
         newSubmission = await prisma.submissions.update({
             where: { id: newSubmission.id },
             data: {
-                problemId: problemId,
-                userId: user.id,
-                code: code,
-                language: language,
                 status: "queued"
             }
         });
@@ -102,6 +98,38 @@ export async function POST(req: Request) {
                 message: error.message
             },
             {status: 400},    
+        );
+    }
+}
+
+export async function GET(req: Request) {
+    try {
+        const {searchParams} = new URL(req.url);
+        const param = searchParams.get("id");
+
+        if(!param){
+            return NextResponse.json({
+                submissions: null,
+                message: "No id provided"
+            });
+        }
+        const submission = await prisma.submissions.findUnique({
+            where: { id: Number(param) }
+        });
+
+        return NextResponse.json({
+            submission
+        });
+
+    }
+
+    catch (error: any) {
+        return NextResponse.json(
+            {
+                submissions: null,
+                message: error.message
+            },
+            {status: 500},    
         );
     }
 }
