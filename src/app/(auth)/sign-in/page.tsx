@@ -1,11 +1,5 @@
-import SignInForm from '@/components/form/SignInForm';
+import dynamic from 'next/dynamic';
 
-const page = () => {
-  return (
-    <div className='w-full'>
-      <SignInForm />
-    </div>
-  );
-};
+const page = dynamic(() => import('../../../components/form/SignInForm'), { loading: () => <b>Loading...</b> })
 
 export default page;

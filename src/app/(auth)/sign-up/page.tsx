@@ -1,11 +1,6 @@
 import SignUpForm from '@/components/form/SignUpForm';
+import dynamic from 'next/dynamic';
 
-const page = () => {
-  return (
-    <div className='w-full'>
-      <SignUpForm />
-    </div>
-  );
-};
+const page = dynamic(() => import('../../../components/form/SignUpForm'), { loading: () => <b>Loading...</b> })
 
 export default page;

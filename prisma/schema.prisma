@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,23 +8,37 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  name    String   @db.VarChar(255)
-  username String  @unique
-  email   String   @unique @db.VarChar(255)
-  password String   @db.VarChar(255)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(255)
+  username     String   @unique
+  email        String   @unique @db.VarChar(255)
+  password     String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  easySolved   Int      @default(0)
+  hardSolved   Int      @default(0)
+  mediumSolved Int      @default(0)
 }
 
 model Problem {
-  id      Int      @id @default(autoincrement())
-  title   String   @db.VarChar(255) @unique
-  description String @db.VarChar(255)
-  difficulty String @db.VarChar(255)
-  likes  Int      @default(0)
-  dislikes Int      @default(0)
-  config Json    @db.Json
+  id          Int      @id @default(autoincrement())
+  title       String   @unique @db.VarChar(255)
+  description String   @db.VarChar(255)
+  difficulty  String   @db.VarChar(255)
+  likes       Int      @default(0)
+  dislikes    Int      @default(0)
+  config      Json     @db.Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Submissions {
+  id        Int      @id @default(autoincrement())
+  problemId Int
+  userId    Int
+  code      String   @db.VarChar(255)
+  language  String   @db.VarChar(255)
+  status    String   @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
