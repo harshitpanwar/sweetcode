@@ -17,7 +17,7 @@ const WorkSpace = (props: Props) => {
   useEffect(() => {
      
       const getProblemData = async () => {
-          const res = await fetch(`http://localhost:3000/api/problem?id=${Number(props.problemId)+1}`)
+          const res = await fetch(`/api/problem?id=${Number(props.problemId)+1}`)
           const data = await res.json()
           setApiData(data?.problem);
       }

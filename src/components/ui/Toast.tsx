@@ -10,10 +10,10 @@ type Props = {
 
 const Toast: React.FC<Props> = ({ time, type, message, onClose }) => {
   useEffect(() => {
-    console.log('toast')
+    // console.log('toast')
     const timer = setTimeout(() => {
       onClose();
-      console.log('toast closed')
+      // console.log('toast closed')
     }, time);
 
     return () => clearTimeout(timer);
